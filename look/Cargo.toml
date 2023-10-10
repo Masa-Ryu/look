@@ -1,9 +1,10 @@
 [package]
 name = "look"
-version = "0.0.1"
+version = "0.0.2"
 edition = "2021"
 authors = ["Masa-Ryu"]
 description = "Easy to look at print debugging."
 license = "MIT"
 
 [dependencies]
+colored = "2.0.4"
