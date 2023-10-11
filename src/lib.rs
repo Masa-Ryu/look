@@ -1,126 +1,139 @@
-use std::collections::{HashMap, HashSet, LinkedList, BinaryHeap};
-use std::rc::Rc;
-use std::sync::Arc;
-use std::ptr::NonNull;
 
-use colored::*;
+pub mod look {
+    use colored::{Colorize, ColoredString};
 
+    // pub fn look<T: Colored>(write: T) {
+        // print!("{}", write.colored());
+    // }
 
-trait Print {
-    fn colored(&self) -> ColoredString;
-}
-
-impl Print for i8 {
-    fn colored(&self) -> ColoredString {
-        format!("{}", self).green()
+    // pub fn lookln<T: Colored>(write: T) {
+        // println!("{}", write.colored());
+    // }
+    pub fn look(write: Box<dyn Colored>) {
+        print!("{}", write.colored());
     }
-}
-impl Print for i16 {
-    fn colored(&self) -> ColoredString {
-        format!("{}", self).green()
+
+    pub fn lookln(write: Box<dyn Colored>) {
+        println!("{}", write.colored());
     }
-}
-
-impl Print for i32 {
-    fn colored(&self) -> ColoredString {
-        format!("{}", self).green()
+    trait Colored {
+        fn colored(&self) -> ColoredString;
     }
-}
 
-impl Print for i64 {
-    fn colored(&self) -> ColoredString {
-        format!("{}", self).green()
+    impl Colored for i8 {
+        fn colored(&self) -> ColoredString {
+            format!("{}", self).green()
+        }
     }
-}
 
-impl Print for i128 {
-    fn colored(&self) -> ColoredString {
-        format!("{}", self).green()
+    impl Colored for i16 {
+        fn colored(&self) -> ColoredString {
+            format!("{}", self).green()
+        }
     }
-}
 
-impl Print for u8 {
-    fn colored(&self) -> ColoredString {
-        format!("{}", self).on_green()
+    impl Colored for i32 {
+        fn colored(&self) -> ColoredString {
+            format!("{}", self).green()
+        }
     }
-}
 
-impl Print for u16 {
-    fn colored(&self) -> ColoredString {
-        format!("{}", self).on_green()
+    impl Colored for i64 {
+        fn colored(&self) -> ColoredString {
+            format!("{}", self).green()
+        }
     }
-}
 
-impl Print for u32 {
-    fn colored(&self) -> ColoredString {
-        format!("{}", self).on_green()
+    impl Colored for i128 {
+        fn colored(&self) -> ColoredString {
+            format!("{}", self).green()
+        }
     }
-}
 
-impl Print for u64 {
-    fn colored(&self) -> ColoredString {
-        format!("{}", self).on_green()
+    impl Colored for u8 {
+        fn colored(&self) -> ColoredString {
+            format!("{}", self).on_green()
+        }
     }
-}
 
-impl Print for u128 {
-    fn colored(&self) -> ColoredString {
-        format!("{}", self).on_green()
+    impl Colored for u16 {
+        fn colored(&self) -> ColoredString {
+            format!("{}", self).on_green()
+        }
     }
-}
 
-impl Print for f32 {
-    fn colored(&self) -> ColoredString {
-        format!("{}", self).blue()
+    impl Colored for u32 {
+        fn colored(&self) -> ColoredString {
+            format!("{}", self).on_green()
+        }
     }
-}
 
-impl Print for f64 {
-    fn colored(&self) -> ColoredString {
-        format!("{}", self).blue()
+    impl Colored for u64 {
+        fn colored(&self) -> ColoredString {
+            format!("{}", self).on_green()
+        }
     }
-}
 
-impl Print for bool {
-    fn colored(&self) -> ColoredString {
-        format!("{}", self).yellow()
+    impl Colored for u128 {
+        fn colored(&self) -> ColoredString {
+            format!("{}", self).on_green()
+        }
     }
-}
 
-impl Print for char {
-    fn colored(&self) -> ColoredString {
-        format!("{}", self).red()
+    impl Colored for f32 {
+        fn colored(&self) -> ColoredString {
+            format!("{}", self).blue()
+        }
     }
-}
 
-impl Print for &'static str {
-    fn colored(&self) -> ColoredString {
-        format!("{}", self).cyan()
+    impl Colored for f64 {
+        fn colored(&self) -> ColoredString {
+            format!("{}", self).blue()
+        }
     }
-}
 
-impl Print for String {
-    fn colored(&self) -> ColoredString {
-        format!("{}", self).cyan()
+    impl Colored for bool {
+        fn colored(&self) -> ColoredString {
+            format!("{}", self).yellow()
+        }
     }
-}
 
-impl Print for (i32, f64, char) {
-    fn colored(&self) -> ColoredString {
-        format!("{:?}", self).purple()
+    impl Colored for char {
+        fn colored(&self) -> ColoredString {
+            format!("{}", self).red()
+        }
     }
+
+    impl Colored for &'static str {
+        fn colored(&self) -> ColoredString {
+            format!("{}", self).cyan()
+        }
+    }
+
+    impl Colored for String {
+        fn colored(&self) -> ColoredString {
+            format!("{}", self).cyan()
+        }
+    }
+
+    impl Colored for (i32, f64, char) {
+        fn colored(&self) -> ColoredString {
+            format!("{:?}", self).purple()
+        }
+    }
+
+
 }
 
-fn look<T: Print>(write: T) {
-    print!("{}", write.colored());
-}
 
-fn lookln<T: Print>(write: T) {
-    println!("{}", write.colored());
-}
+
 
 #[cfg(test)]
 mod tests {
+    use std::collections::{HashMap, HashSet, LinkedList, BinaryHeap};
+    use std::rc::Rc;
+    use std::sync::Arc;
+    use std::ptr::NonNull;
     use super::*;
 
     // primitive types
@@ -331,33 +344,33 @@ mod tests {
         println!("{}", "-".repeat(80));
         println!("Uses look");
 
-        look(setup_int8());
+        print(setup_int8());
         println!("");
-        look(setup_int16());
+        print(setup_int16());
         println!("");
-        look(setup_int32());
+        print(setup_int32());
         println!("");
-        look(setup_int64());
+        print(setup_int64());
         println!("");
-        look(setup_int128());
+        print(setup_int128());
         println!("");
-        look(setup_uint8());
+        print(setup_uint8());
         println!("");
-        look(setup_uint16());
+        print(setup_uint16());
         println!("");
-        look(setup_uint32());
+        print(setup_uint32());
         println!("");
-        look(setup_uint64());
+        print(setup_uint64());
         println!("");
-        look(setup_uint128());
+        print(setup_uint128());
         println!("");
-        look(setup_float32());
+        print(setup_float32());
         println!("");
-        look(setup_float64());
+        print(setup_float64());
         println!("");
-        look(setup_boolean());
+        print(setup_boolean());
         println!("");
-        look(setup_character());
+        print(setup_character());
         println!("");
         // look(setup_tuple());
         // println!("");
@@ -402,24 +415,24 @@ mod tests {
         println!("{}", "-".repeat(80));
         println!("Uses lookln");
 
-        lookln(setup_int8());
-        lookln(setup_int16());
-        lookln(setup_int32());
-        lookln(setup_int64());
-        lookln(setup_int128());
-        lookln(setup_uint8());
-        lookln(setup_uint16());
-        lookln(setup_uint32());
-        lookln(setup_uint64());
-        lookln(setup_uint128());
-        lookln(setup_float32());
-        lookln(setup_float64());
-        lookln(setup_boolean());
-        lookln(setup_character());
+        println(setup_int8());
+        println(setup_int16());
+        println(setup_int32());
+        println(setup_int64());
+        println(setup_int128());
+        println(setup_uint8());
+        println(setup_uint16());
+        println(setup_uint32());
+        println(setup_uint64());
+        println(setup_uint128());
+        println(setup_float32());
+        println(setup_float64());
+        println(setup_boolean());
+        println(setup_character());
         // lookln(setup_tuple());
         // lookln(setup_array());
-        lookln(setup_str_slice());
-        lookln(setup_string());
+        println(setup_str_slice());
+        println(setup_string());
         // lookln(setup_vector());
         // lookln(setup_slice());
         // lookln(setup_optional());
